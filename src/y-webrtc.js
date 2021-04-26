@@ -519,7 +519,12 @@ export class SignalingConn extends ws.WebsocketClient {
       }
     })
     this.on('disconnect', () => log(`disconnect (${url})`))
+    this.on('open', () => this.keepAlive())
   }
+keepAlive() {
+   this.heartbeat = setInterval(() => {this.send('ping');}, 800);
+}
+
 }
 
 /**
